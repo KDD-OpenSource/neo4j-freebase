@@ -2,6 +2,8 @@ FROM neo4j-graph-algorithms:latest as neo4j
 #For normal use cases ("neo4j:3.3-enterprise" for neo4j enterprise)
 #FROM neo4j:3.3 as neo4j
 
+RUN apk --update add curl
+
 # TODO: Is this COPY neccessary?
 COPY ./neo4j-app/local-package/* /tmp/
 
