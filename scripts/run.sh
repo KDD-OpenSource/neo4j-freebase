@@ -58,6 +58,7 @@ if [[ $IS_NEO -eq 1 ]]; then
             ${DOCKER_OPT} -e NEO4J_AUTH=${NEO4J_AUTH}      \
             -e NEO4J_dbms_memory_heap_initial__size=4096M  \
             -e NEO4J_dbms_memory_heap_max__size=${MAX_MEM} \
+            --env=NEO4J_ACCEPT_LICENSE_AGREEMENT=yes       \
             lissandrini/neo4j-server ${CMD}
 
   RET=$?
