@@ -2,7 +2,7 @@
 # set an initial value for the flag
 CMD='neo4j'
 NEO4J_AUTH='none'
-MAX_MEM='25360m'
+MAX_MEM='204800m'
 IS_NEO=0
 DOCKER_OPT='-it'
 
