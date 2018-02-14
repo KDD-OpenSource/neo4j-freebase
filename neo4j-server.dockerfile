@@ -14,7 +14,7 @@ RUN mv data /data \
 VOLUME /data
 VOLUME /conf
 
-COPY --from=neo4j docker-entrypoint.sh /docker-entrypoint.sh
+COPY neo4j-app/docker-entrypoint.sh /docker-entrypoint.sh
 COPY neo4j-app/import-data.sh /import-data.sh
 COPY neo4j-app/create-index.sh /create-index.sh
 COPY neo4j-app/index.cql /index.cql
