@@ -2,9 +2,14 @@
 # set an initial value for the flag
 CMD='neo4j'
 NEO4J_AUTH='none'
-MAX_MEM='204800m'
+MAX_MEM='240g'
 IS_NEO=0
 DOCKER_OPT='-it'
+NEO4J_HTTP=7504
+NEO4J_BOLT=7717
+
+docker stop freebase-container
+docker rm freebase-container
 
 # read the options
 TEMP=`getopt -o aidxms --long auth,import,dumpconf,index,mem,cyphershell -n 'run.sh' -- "$@"`
@@ -53,12 +58,13 @@ fi
 
 if [[ $IS_NEO -eq 1 ]]; then
   echo "Starting Neo4j"
-  docker run  --publish=7473:7473 --publish=7474:7474 --publish=7687:7687 --publish=8080:8080  \
-            --volume=`pwd`/dbms:/dbms   --volume=`pwd`/data:/data  ${CONF_VOL} \
+  docker run  --publish=${NEO4J_HTTP}:7474 --publish=${NEO4J_BOLT}:7687 --memory=${MAX_MEM} --publish=8080:8080  \
+            --volume=`pwd`/dbms:/dbms --volume=`pwd`/../plugins:/var/lib/neo4j/plugins --volume=`pwd`/conf:/conf  --volume=`pwd`/data:/data  ${CONF_VOL} \
             ${DOCKER_OPT} -e NEO4J_AUTH=${NEO4J_AUTH}      \
             -e NEO4J_dbms_memory_heap_initial__size=4096M  \
             -e NEO4J_dbms_memory_heap_max__size=${MAX_MEM} \
             --env=NEO4J_ACCEPT_LICENSE_AGREEMENT=yes       \
+            --name freebase-container \
             lissandrini/neo4j-server ${CMD}
 
   RET=$?
